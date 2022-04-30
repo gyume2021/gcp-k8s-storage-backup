@@ -2,9 +2,11 @@
 
 ## [Install the CLI](https://github.com/vmware-tanzu/velero/releases/tag/v1.8.1)
 
+```bash
 tar -xvf <RELEASE-TARBALL-NAME>.tar.gz
 cd velero-v1.8.1-linux-amd64
 mv velero /usr/local/bin
+```
 
 ## [Install the Velero server](https://github.com/vmware-tanzu/helm-charts)
 
@@ -36,11 +38,15 @@ helm upgrade --cleanup-on-fail \
 - Grant access to Velero
     - Create a service account key, specifying an output file (`credentials-velero`) in your local directory
 
+```bash
 gcloud iam service-accounts keys create credentials-velero \
     --iam-account $SERVICE_ACCOUNT_EMAIL
+```
 
 - Uninstall Velero
+```bash
 helm uninstall velero -n velero
+```
 
 ## [velero plugin for gcp](https://github.com/vmware-tanzu/velero-plugin-for-gcp#setup)
 
@@ -51,6 +57,7 @@ gsutil mb gs://$BUCKET/
 
 - Create Google Service Account
 
+```bash
 gcloud config list
 
 PROJECT_ID=$(gcloud config get-value project)
@@ -62,6 +69,7 @@ gcloud iam service-accounts create $GSA_NAME \
 SERVICE_ACCOUNT_EMAIL=$(gcloud iam service-accounts list \
   --filter="displayName:Velero service account" \
   --format 'value(email)')
+```
 
 - Create Custom Role with Permissions for the Velero GSA
 
