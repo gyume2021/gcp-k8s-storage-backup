@@ -6,6 +6,8 @@ This directory contains sample YAML config files that can be used for exploring 
 
 * `nginx-app/`: A sample nginx app that can be used to test backups and restores.
 
-
+## Reference
 [0]: https://velero.io/docs/main/contributions/minio/
 [1]: https://github.com/minio/minio
+
+- [backup example](https://velero.io/docs/v1.8/examples/)

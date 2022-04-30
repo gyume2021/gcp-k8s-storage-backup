@@ -23,10 +23,11 @@ helm upgrade --cleanup-on-fail \
 --set cleanUpCRDs=true \
 --set-file credentials.secretContents.cloud=cred.json \
 --set configuration.provider=gcp \
---set configuration.backupStorageLocation.name=backup-velereo-location-name \
+--set configuration.backupStorageLocation.name=aaa \
+--set schedules.bbb.template.storageLocation=aaa \
+--set schedules.bbb.schedule="0 0 * * *" \
 --set configuration.backupStorageLocation.bucket=velereo-bucket \
 --set configuration.backupStorageLocation.config.region=asia-east1 \
---set configuration.volumeSnapshotLocation.name=snapshot-velereo-location-name \
 --set configuration.volumeSnapshotLocation.config.region=asia-east1 \
 --set initContainers[0].name=velero-plugin-for-gcp \
 --set initContainers[0].image=velero/velero-plugin-for-gcp:v1.4.1 \
@@ -101,4 +102,13 @@ gcloud projects add-iam-policy-binding $PROJECT_ID \
     --role projects/$PROJECT_ID/roles/velero.server
 
 gsutil iam ch serviceAccount:$SERVICE_ACCOUNT_EMAIL:objectAdmin gs://${BUCKET}
+```
+
+## [examples](https://velero.io/docs/v1.8/examples/)
+
+```bash
+kubectl apply -f examples/nginx-app/base.yaml
+velero backup create nginx-backup --include-namespaces nginx-example
+kubectl delete namespaces nginx-example
+velero restore create --from-backup nginx-backup
 ```
